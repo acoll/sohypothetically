@@ -1,0 +1,57 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+
+<dom-module id="list-view">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+      .card {
+        box-shadow: 
+          0 2px 2px 0 rgba(0, 0, 0, 0.14), 
+          0 1px 5px 0 rgba(0, 0, 0, 0.12), 
+          0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        padding: 16px;
+        margin-top: 24px;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #757575;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 16px 0;
+        color: #212121;
+      }
+    </style>
+
+    <firebase-query id="query" path="questions" data="{{questions}}"></firebase-query>
+
+    <template is="dom-repeat" items="{{questions}}">
+      <div class="card">
+        <p>[[item.text]]</p>
+        <div class="buttons">
+          <template is="dom-repeat" items="[[item.choices]]" as="choice">
+            <paper-button on-tap="makeChoice">[[choice]]</paper-button>
+          </template>
+        </div>
+      </div>
+    </template>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: 'list-view',
+      makeChoice: function (e) {
+        console.log(e.model.choice);
+      }
+    });
+
+  </script>
+
+</dom-module>
