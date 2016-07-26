@@ -135,7 +135,17 @@
         this.$.createDialog.open();
       },
       submitThatShit: function () {
-        this.questions.push({ text: this.newHypo, choices: this.choices });
+        var question = this.questions.push({ 
+          text: this.newHypo, 
+          creator: {
+            id: firebase.auth().currentUser.uid,
+            email: firebase.auth().currentUser.email
+          } 
+        });
+
+        this.choices.forEach(function(ch) {
+          question.child('choices').push(ch);
+        });
         this.$.createDialog.close();
       },
       signIn: function () {
